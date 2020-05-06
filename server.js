@@ -1,6 +1,5 @@
-
-const inquirer = require("inquirer");
-const connection = require("./db/config/connection.js");
+const inquirer = require('inquirer');
+const orm = require("./db/config/orm");
 
 function searchDatabase() {
     inquirer
@@ -21,151 +20,65 @@ function searchDatabase() {
         "Remove role",
         "Update employee",
         "Update employee's role",
-        "Update employee's manager"
+        "Update employee's manager",
+        "Exit"
       ]
     }).then(function(answer) {
         switch(answer.action) {
             case "View all employees":
-                employeeSearch();
+                orm.employeeSearch();
                 break;
 
             case "View all employees by department":
-                employeeDepartmentSearch();
+                orm.employeeDepartmentSearch();
                 break;
         
             case "View all employees by manager":
-                employeeManagerSearch();
+                orm.employeeManagerSearch();
                 break;
 
             case "View department's salaries":
-                departmentSalarySearch();
+                orm.departmentSalarySearch();
                 break;
             
             case "Add employee":
-                employeeAdd();
+                orm.employeeAdd();
                 break;
 
             case "Remove employee":
-                employeeRemove();
+                orm.employeeRemove();
                 break;
 
             case "Add department":
-                departmentAdd();
+                orm.departmentAdd();
                 break;
 
             case "Remove department":
-                departmentRemove();
+                orm.departmentRemove();
                 break;
 
             case "Add role":
-                roleAdd();
+                orm.roleAdd();
                 break;
 
             case "Remove role":
-                roleRemove();
+                orm.roleRemove();
                 break;
 
             case "Update employee":
-                employeeUpdate();
+                orm.employeeUpdate();
                 break;
 
             case "Update employee's role":
-                employeeRoleUpdate();
+                orm.employeeRoleUpdate();
                 break;
 
             case "Update employee's manager":
-                employeeManagerUpdate();
+                orm.employeeManagerUpdate();
                 break; 
         }
     });
+
 }
-
-function employeeSearch() {
-    connection.query("SELECT e1.first_name, e1.last_name, role.title, department.name, role.salary, e2.first_name FROM employee e1 JOIN role ON e1.role_id = role.id AND role.salary JOIN department ON role.department_id = department.id LEFT JOIN employee e2 ON e2.id = e1.manager_id", (err, res) => {
-        if (err) throw err;
-        for (i = 0; i < res.length; i++) {
-            console.log(res);
-            // console.log(`ID: ${res[i].id} | name: ${res[i].first_name} ${res[i].last_name} | posistion: ${res[i].role.title} | department: ${res[i].department.title} | salary: ${res[i].role.salary} | manager: ${res[i].e2.first_name}`);
-        }
-    })
-};
-
-function employeeDepartmentSearch() {
-    inquirer
-    .prompt({
-      name: "department",
-      type: "list",
-      message: "Which department would you like to view?",
-      choices: []
-    })
-};
-
-function employeeManagerSearch() {
-
-};
-
-function departmentSalarySearch() {
-
-};
-
-function employeeAdd() {
-    inquirer
-    .prompt([
-        {
-            name: "firstname",
-            type: "input",
-            message: "Employee's first name"
-        },
-        {
-            name: "lastname",
-            type: "input",
-            message: "Employee's last name"
-        },
-        {
-            name: "role",
-            type: "list",
-            message: "Employee's role",
-            choices: []
-        },
-        {
-            name: "manager",
-            type: "list",
-            message: "Employee's manager",
-            choices: []
-        },
-    ])
-};
-
-function employeeRemove() {
-
-};
-
-function departmentAdd() {
-
-};
-
-function departmentRemove() {
-
-};
-
-function roleAdd() {
-
-};
-
-function roleRemove() {
-
-};
-
-function employeeUpdate() {
-
-};
-
-function employeeRoleUpdate() {
-
-};
-
-function employeeManagerUpdate() {
-
-};
 
 searchDatabase();
