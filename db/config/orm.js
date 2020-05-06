@@ -9,7 +9,7 @@ employeeSearch: function() {
 			                    JOIN department ON role.department_id = department.id`, (err, res) => {
         if (err) throw err;
         for (i = 0; i < res.length; i++) {
-            console.log(`ID: ${res[i].id} | name: ${res[i].first_name} ${res[i].last_name} | posistion: ${res[i].title} | department: ${res[i].name} | salary: ${res[i].salary} | manager: ${res[i].manager_id}`);
+            console.table(`ID: ${res[i].id} | name: ${res[i].first_name} ${res[i].last_name} | posistion: ${res[i].title} | department: ${res[i].name} | salary: ${res[i].salary} | manager: ${res[i].manager_id}`);
         }
     });
 },
@@ -28,7 +28,7 @@ employeeDepartmentSearch: function() {
                                         WHERE department.name = "${answer.department}"`, (err, res) => {
             if (err) throw err;
             for ( i = 0; i < res.length; i++) {
-                console.log(`name: ${res[i].first_name} ${res[i].last_name} | department: ${res[i].name}`);
+                console.table(`name: ${res[i].first_name} ${res[i].last_name} | department: ${res[i].name}`);
             }
         });
     });
