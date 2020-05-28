@@ -59,7 +59,7 @@ const searchDatabase = function() {
                 break;
 
             case "Update employee's role":
-                employeeRoleUpdate();
+                updateEmployeeRoles();
                 break;
             
             case "Exit":
@@ -325,13 +325,12 @@ async function roleAdd() {
                 ]).then((answer) => {
                     console.log(answer.department);
                     const dep = answer.department;
-                    connection.query(`SELECT * FROM role`, (err, res) => {
+                    connection.query(`SELECT * FROM department`, (err, res) => {
                         if (err) throw err;
                         let filteredDep = res.filter((res) => {
                             return res.name == dep
                         })
                         let depId = filteredDep[0].id
-                        console.log(depId);
                         connection.query(`INSERT INTO role (title, salary, department_id) VALUES ("${answer.title}", ${answer.salary}, ${depId})`, (err, res) => {
                             if (err) throw err;
                             console.log(`You have added ${answer.title} role to roles list!`)
@@ -420,4 +419,8 @@ function updateEmployeeRoles() {
       });
     });
   });
+  }
+
+  function finish() {
+    return;
   }
